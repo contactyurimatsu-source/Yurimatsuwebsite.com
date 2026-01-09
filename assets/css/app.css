@@ -1,0 +1,336 @@
+/*
+  YAMORI (custom) — minimal, readable stylesheet
+  Keeps the Stellar HTML structure, but replaces Stellar's CSS with a simpler system.
+
+  Palette (provided):
+  --c-ink:        #1E1F1C  (charcoal)
+  --c-ink-2:      #3A3C38  (structural gray)
+  --c-accent:     #4F6F52  (muted signal green)
+  --c-accent-2:   #9FB8A0  (soft highlight green)
+  --c-bg:         #F4F5F2  (warm white)
+*/
+
+/* Optional dependencies (free) */
+@import url(fontawesome-all.min.css);
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400");
+
+/* ----------------------------
+   Design tokens
+---------------------------- */
+:root{
+  --c-ink:#1E1F1C;
+  --c-ink-2:#3A3C38;
+  --c-accent:#4F6F52;
+  --c-accent-2:#9FB8A0;
+  --c-bg:#F4F5F2;
+
+  --radius:14px;
+  --radius-sm:10px;
+
+  --shadow:0 10px 30px rgba(30,31,28,.10);
+  --shadow-sm:0 6px 18px rgba(30,31,28,.10);
+
+  --max:72rem;        /* ~1152px */
+  --gutter:1.25rem;
+
+  --space-1:.5rem;
+  --space-2:1rem;
+  --space-3:1.5rem;
+  --space-4:2.25rem;
+  --space-5:3.5rem;
+
+  --fs-0:1rem;
+  --fs-1:1.125rem;
+  --fs-2:1.5rem;
+  --fs-3:2.25rem;
+
+  --lh:1.65;
+}
+
+/* ----------------------------
+   Base / reset (small)
+---------------------------- */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:"Source Sans Pro", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size:var(--fs-0);
+  line-height:var(--lh);
+  color:var(--c-ink);
+  background:var(--c-bg);
+}
+img{max-width:100%; height:auto; display:block}
+a{color:var(--c-accent); text-decoration:none}
+a:hover{color:var(--c-ink)}
+p{margin:0 0 var(--space-2)}
+h1,h2,h3{line-height:1.2; margin:0 0 var(--space-2)}
+h1{font-size:clamp(2rem, 3vw, 3rem); letter-spacing:.02em}
+h2{font-size:clamp(1.5rem, 2vw, 2.25rem)}
+h3{font-size:1.25rem}
+small{color:var(--c-ink-2)}
+hr{
+  border:0;
+  border-top:1px solid rgba(58,60,56,.18);
+  margin:var(--space-4) 0;
+}
+
+/* ----------------------------
+   Layout helpers
+---------------------------- */
+.container{
+  width:min(var(--max), 100% - (var(--gutter)*2));
+  margin-inline:auto;
+}
+.section-pad{padding:var(--space-5) 0}
+.card{
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(58,60,56,.12);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+}
+
+/* ----------------------------
+   Wrapper
+---------------------------- */
+#wrapper{min-height:100vh}
+
+/* ----------------------------
+   Header (hero)
+---------------------------- */
+#header{
+  text-align:center;
+  padding:calc(var(--space-5) + 1rem) 0 var(--space-4);
+}
+#header .logo{
+  width:88px; height:88px;
+  margin:0 auto var(--space-2);
+  border-radius:999px;
+  box-shadow:var(--shadow-sm);
+}
+#header h1{margin-bottom:var(--space-1)}
+#header p{max-width:60ch; margin:0 auto}
+
+/* ----------------------------
+   Nav
+---------------------------- */
+#nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(244,245,242,.92);
+  backdrop-filter:saturate(1.2) blur(8px);
+  border-top:1px solid rgba(58,60,56,.12);
+  border-bottom:1px solid rgba(58,60,56,.12);
+}
+#nav ul{
+  list-style:none;
+  display:flex;
+  gap:var(--space-2);
+  padding:.75rem 0;
+  margin:0;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+#nav a{
+  display:inline-block;
+  padding:.55rem .9rem;
+  border-radius:999px;
+  color:var(--c-ink-2);
+}
+#nav a:hover{background:rgba(159,184,160,.25); color:var(--c-ink)}
+#nav a.active{
+  background:rgba(79,111,82,.16);
+  color:var(--c-ink);
+  border:1px solid rgba(79,111,82,.25);
+}
+
+/* ----------------------------
+   Main content sections
+---------------------------- */
+#main{padding:var(--space-4) 0}
+#main > section{margin:0 auto var(--space-5)}
+#main > section > header.major{
+  text-align:center;
+  margin-bottom:var(--space-3);
+}
+header.major p{max-width:65ch; margin:0 auto}
+
+/* ----------------------------
+   Spotlight (image + text)
+   Matches Stellar UX: 2-column, stacks on mobile
+---------------------------- */
+.spotlight{
+  display:flex;
+  gap:var(--space-4);
+  align-items:center;
+}
+.spotlight .image{
+  flex:0 0 min(420px, 45%);
+}
+.spotlight .image img{
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.spotlight .content{
+  flex:1;
+}
+
+/* ----------------------------
+   Features (3-up grid)
+---------------------------- */
+.features{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:var(--space-3);
+}
+.features li{
+  padding:var(--space-3);
+  border-radius:var(--radius);
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(58,60,56,.12);
+  box-shadow:var(--shadow-sm);
+  text-align:center;
+}
+.features .icon{
+  display:inline-grid;
+  place-items:center;
+  width:64px; height:64px;
+  margin:0 auto var(--space-2);
+  border-radius:999px;
+  background:rgba(159,184,160,.25);
+  color:var(--c-accent);
+  font-size:1.5rem;
+}
+.features p{color:var(--c-ink-2)}
+
+/* ----------------------------
+   Statistics (4-up)
+---------------------------- */
+.statistics{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  gap:var(--space-3);
+}
+.statistics li{
+  text-align:center;
+  padding:var(--space-3);
+  border-radius:var(--radius);
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(58,60,56,.12);
+}
+.statistics strong{
+  display:block;
+  font-size:1.75rem;
+  color:var(--c-ink);
+}
+.statistics .icon{
+  display:block;
+  font-size:1.5rem;
+  color:var(--c-accent);
+  margin-bottom:var(--space-1);
+}
+
+/* ----------------------------
+   Buttons / actions
+---------------------------- */
+.actions{
+  list-style:none;
+  padding:0;
+  margin:var(--space-3) 0 0;
+  display:flex;
+  gap:var(--space-2);
+  justify-content:flex-start;
+  flex-wrap:wrap;
+}
+.actions.special{justify-content:center}
+
+.button,
+input[type="submit"],
+input[type="button"],
+button{
+  appearance:none;
+  border:1px solid rgba(58,60,56,.18);
+  background:rgba(255,255,255,.55);
+  color:var(--c-ink);
+  border-radius:999px;
+  padding:.75rem 1.1rem;
+  font:inherit;
+  font-weight:600;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:.55rem;
+}
+.button:hover,
+button:hover{
+  border-color:rgba(79,111,82,.35);
+  background:rgba(159,184,160,.22);
+}
+.button.primary{
+  background:var(--c-accent);
+  border-color:var(--c-accent);
+  color:var(--c-bg);
+}
+.button.primary:hover{
+  background:#446347; /* slightly darker */
+}
+
+/* ----------------------------
+   Footer
+---------------------------- */
+#footer{
+  padding:var(--space-5) 0;
+  border-top:1px solid rgba(58,60,56,.12);
+}
+#footer .copyright{
+  list-style:none;
+  padding:0;
+  margin:var(--space-3) 0 0;
+  text-align:center;
+  color:var(--c-ink-2);
+}
+#footer .icons{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  justify-content:center;
+  gap:var(--space-2);
+}
+#footer .icons a{
+  color:var(--c-ink-2);
+  display:inline-grid;
+  place-items:center;
+  width:40px; height:40px;
+  border-radius:999px;
+  border:1px solid rgba(58,60,56,.16);
+  background:rgba(255,255,255,.45);
+}
+#footer .icons a:hover{
+  color:var(--c-ink);
+  background:rgba(159,184,160,.22);
+  border-color:rgba(79,111,82,.25);
+}
+
+/* ----------------------------
+   Responsive
+---------------------------- */
+@media (max-width: 900px){
+  .features{grid-template-columns:repeat(2, minmax(0, 1fr))}
+  .statistics{grid-template-columns:repeat(2, minmax(0, 1fr))}
+  .spotlight{flex-direction:column}
+  .spotlight .image{flex-basis:auto; width:100%}
+}
+@media (max-width: 520px){
+  .features{grid-template-columns:1fr}
+  .statistics{grid-template-columns:1fr}
+  #nav ul{gap:.5rem}
+  #nav a{padding:.5rem .75rem}
+}

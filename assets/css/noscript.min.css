@@ -1,0 +1,3 @@
+/* Minimal noscript fallback.
+   If JS is disabled, remove "preload" visual states. */
+body.is-preload *{transition:none !important; animation:none !important;}
