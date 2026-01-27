@@ -1,22 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap");
 
 :root{
-  --ink:#1E1F1C;      /* Charcoal */
-  --muted:#3A3C38;    /* Structural gray */
-  --accent:#4F6F52;   /* Muted signal green */
-  --accent2:#9FB8A0;  /* Soft highlight green */
-  --bg:#F4F5F2;       /* Warm white */
-  --card:#FFFFFF;
+  /* Core neutrals */
+  --ink:#1E1F1C;      /* Charcoal Neutral */
+  --muted:#3A3C38;    /* Structural Grey */
+  --bg:#F4F5F2;       /* Warm Neutral White */
 
+  /* Brand accents */
+  --accent:#1B2318;   /* Dark Green – Primary Accent */
+  --accent2:#A9C4A1;  /* Light Green – Secondary Accent */
+
+  /* System */
+  --card:#FFFFFF;
   --max:1100px;
   --r:18px;
   --shadow:0 16px 40px rgba(0,0,0,.08);
-
-  --s1:.5rem;
-  --s2:1rem;
-  --s3:1.5rem;
-  --s4:2.25rem;
-  --s5:3rem;
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2.25rem; --s5:3rem;
 }
 
 *{ box-sizing:border-box; }
