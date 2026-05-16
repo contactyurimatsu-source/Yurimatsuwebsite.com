@@ -298,3 +298,25 @@ a{ color:inherit; }
 }
 .footer small{ color:var(--muted); }
 
+.language-switcher {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin-left: auto;
+}
+
+.lang-btn {
+  border: 1px solid rgba(244, 245, 242, 0.25);
+  background: transparent;
+  color: inherit;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.lang-btn.active {
+  background: #A9C4A1;
+  color: #1E1F1C;
+  border-color: #A9C4A1;
+}
