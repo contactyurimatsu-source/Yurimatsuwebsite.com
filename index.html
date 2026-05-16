@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Yurimatsu</title>
   <link rel="stylesheet" href="./assets/css/app.css">
-<link rel="icon" type="image/png" sizes="32x32" href="./images/faviconlogoyurimatsubig.png?v=3">
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/faviconlogoyurimatsubig.png?v=3">
 </head>
+
 <body>
 
 <header class="header">
@@ -15,18 +16,25 @@
       <img class="brand-logo" src="./images/yurimatsulogolarge.png" alt="Yurimatsu logo">
       <div>
         <div class="brand-name">Yurimatsu</div>
-        <div class="brand-tagline">Protective brand systems for calm, high-trust growth.</div>
+        <div class="brand-tagline" data-i18n="brandTagline">
+          B2B differentiation marketing between Japan and Europe.
+        </div>
       </div>
     </a>
+
+    <div class="language-switcher" aria-label="Language switcher">
+      <button type="button" class="lang-btn active" data-lang="en">EN</button>
+      <button type="button" class="lang-btn" data-lang="ja">日本語</button>
+    </div>
 
     <details class="nav">
       <summary class="nav-toggle" aria-label="Open navigation">Menu</summary>
       <nav class="nav-menu" aria-label="Primary navigation">
-        <a class="nav-link" href="#intro">Intro</a>
-        <a class="nav-link" href="#services">Services</a>
-        <a class="nav-link" href="#proof">Proof</a>
-        <a class="nav-link" href="#contact">Contact</a>
-        <a class="nav-link" href="./generic.html">More</a>
+        <a class="nav-link" href="#intro" data-i18n="navIntro">Intro</a>
+        <a class="nav-link" href="#services" data-i18n="navServices">Services</a>
+        <a class="nav-link" href="#proof" data-i18n="navProof">Proof</a>
+        <a class="nav-link" href="#contact" data-i18n="navContact">Contact</a>
+        <a class="nav-link" href="./generic.html" data-i18n="navMore">More</a>
       </nav>
     </details>
   </div>
@@ -36,37 +44,46 @@
   <section class="hero" id="intro">
     <div class="container hero-grid">
       <div>
-        <h1>Brand strategy and systems that protect your growth.</h1>
-        <p>
-          Yurimatsu helps brands build calm, consistent brand foundations—identity, messaging,
-          and content systems—so you scale without chaos.
+        <h1 data-i18n="heroTitle">
+          Differentiation marketing for B2B companies entering unfamiliar markets.
+        </h1>
+
+        <p data-i18n="heroText">
+          Yurimatsu helps Japanese and European B2B companies clarify how they should be positioned, understood, and trusted in a different market context. We combine marketing strategy, intercultural market insight, and neuromarketing-informed analysis to make complex B2B offers easier to communicate.
         </p>
+
         <div class="btn-row">
-          <a class="btn btn-primary" href="#contact">Start here</a>
-          <a class="btn btn-ghost" href="./generic.html">See how we work</a>
+          <a class="btn btn-primary" href="#contact" data-i18n="heroButtonPrimary">Start a conversation</a>
+          <a class="btn btn-ghost" href="./generic.html" data-i18n="heroButtonSecondary">See how we work</a>
         </div>
 
         <div class="pill-row" aria-label="Key themes">
-          <span class="pill">Brand clarity</span>
-          <span class="pill">Content systems</span>
-          <span class="pill">Trust-first growth</span>
+          <span class="pill" data-i18n="pillOne">B2B differentiation</span>
+          <span class="pill" data-i18n="pillTwo">Japan–Europe communication</span>
+          <span class="pill" data-i18n="pillThree">Evidence-informed marketing</span>
         </div>
       </div>
 
       <aside class="hero-card">
-        <h2 class="section-title" style="margin:0 0 .5rem;">What you get</h2>
-        <p class="section-lead" style="margin:0;">
-          A practical brand kit you can execute: messaging, visual rules, and a content workflow.
+        <h2 class="section-title" style="margin:0 0 .5rem;" data-i18n="whatYouGetTitle">
+          What we build
+        </h2>
+
+        <p class="section-lead" style="margin:0;" data-i18n="whatYouGetText">
+          A clearer market-facing strategy: who you are for, why your offer is different, and how that message should appear across website, pitch, content, and outreach.
         </p>
+
         <hr class="hr" style="margin:1rem 0;">
+
         <div class="grid grid-2">
           <div class="card" style="box-shadow:none;">
-            <h3 style="margin:.2rem 0;">Identity</h3>
-            <p>Colors, type, layout rules, usage do/don’t.</p>
+            <h3 style="margin:.2rem 0;" data-i18n="cardOneTitle">Positioning</h3>
+            <p data-i18n="cardOneText">Define the market role, value logic, and differentiation angle.</p>
           </div>
+
           <div class="card" style="box-shadow:none;">
-            <h3 style="margin:.2rem 0;">Messaging</h3>
-            <p>Positioning, value prop, voice, key claims.</p>
+            <h3 style="margin:.2rem 0;" data-i18n="cardTwoTitle">Communication</h3>
+            <p data-i18n="cardTwoText">Translate the strategy into website copy, pitch structure, and outreach messaging.</p>
           </div>
         </div>
       </aside>
@@ -77,21 +94,31 @@
 
   <section class="section" id="services">
     <div class="container">
-      <h2 class="section-title">Services</h2>
-      <p class="section-lead">Our packages, custom packages upon request</p>
+      <h2 class="section-title" data-i18n="servicesTitle">Services</h2>
+      <p class="section-lead" data-i18n="servicesLead">
+        Focused support for B2B companies that need clearer differentiation before entering or growing in another market.
+      </p>
 
       <div class="grid grid-3" style="margin-top:1.25rem;">
         <div class="card">
-          <h3>Brand foundation</h3>
-          <p>Positioning, messaging, and a clean structure for your website and content.</p>
+          <h3 data-i18n="serviceOneTitle">Differentiation audit</h3>
+          <p data-i18n="serviceOneText">
+            We review your current website, offer, competitors, and market message to identify where your positioning is unclear, generic, or difficult to trust.
+          </p>
         </div>
+
         <div class="card">
-          <h3>Content system</h3>
-          <p>Repeatable formats, prompts, workflows, and templates for consistent output.</p>
+          <h3 data-i18n="serviceTwoTitle">Market communication strategy</h3>
+          <p data-i18n="serviceTwoText">
+            We structure your value proposition for a specific B2B audience, with attention to cultural expectations, decision criteria, and trust signals.
+          </p>
         </div>
+
         <div class="card">
-          <h3>Launch support</h3>
-          <p>Landing page, offer framing, and a first campaign plan with tight priorities.</p>
+          <h3 data-i18n="serviceThreeTitle">Website and pitch messaging</h3>
+          <p data-i18n="serviceThreeText">
+            We turn the strategy into practical copy blocks, page structure, pitch wording, and outreach angles that can be used immediately.
+          </p>
         </div>
       </div>
     </div>
@@ -101,19 +128,32 @@
 
   <section class="section" id="proof">
     <div class="container">
-      <h2 class="section-title">Proof</h2>
-      <p class="section-lead">Replace these with your own examples as you build them.</p>
+      <h2 class="section-title" data-i18n="proofTitle">Current focus</h2>
+      <p class="section-lead" data-i18n="proofLead">
+        Yurimatsu is in development. Our current work focuses on building a practical service model for B2B companies that need stronger market positioning between Japan and Europe.
+      </p>
 
-      <div class="video-grid" style="margin-top:1.25rem;">
-        <video class="video" controls playsinline>
-          <source src="Your%20paragraph%20text.mp4" type="video/mp4">
-        </video>
-        <video class="video" controls playsinline>
-          <source src="Your%20paragraph%20text.mp4" type="video/mp4">
-        </video>
-        <video class="video" controls playsinline>
-          <source src="Your%20paragraph%20text.mp4" type="video/mp4">
-        </video>
+      <div class="grid grid-3" style="margin-top:1.25rem;">
+        <div class="card">
+          <h3 data-i18n="proofOneTitle">Research-based</h3>
+          <p data-i18n="proofOneText">
+            We use marketing, consumer psychology, and intercultural business research to support strategic choices.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="proofTwoTitle">Practical output</h3>
+          <p data-i18n="proofTwoText">
+            The result is not only analysis. We create usable messaging, page structures, and communication material.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="proofThreeTitle">International bridge</h3>
+          <p data-i18n="proofThreeText">
+            Our founding team connects Dutch, German, and Japanese perspectives for cross-market communication.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -122,12 +162,14 @@
 
   <section class="section" id="contact">
     <div class="container">
-      <h2 class="section-title">Contact</h2>
-      <p class="section-lead">One clear next step. No friction.</p>
+      <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
+      <p class="section-lead" data-i18n="contactLead">
+        For companies exploring Japan–Europe B2B marketing, differentiation, or market communication.
+      </p>
 
       <div class="btn-row" style="margin-top:1.25rem;">
-        <a class="btn btn-primary" href="mailto:hello@yurimatsu.com">Email</a>
-        <a class="btn btn-ghost" href="./generic.html">Read more</a>
+        <a class="btn btn-primary" href="mailto:hello@yurimatsu.com" data-i18n="contactButtonOne">Email Yurimatsu</a>
+        <a class="btn btn-ghost" href="./generic.html" data-i18n="contactButtonTwo">Read more</a>
       </div>
     </div>
   </section>
@@ -136,14 +178,139 @@
 <footer class="footer">
   <div class="container footer-inner">
     <small>© <span id="year"></span> Yurimatsu</small>
-    <small>Built for calm, consistent growth.</small>
+    <small data-i18n="footerText">B2B differentiation marketing between Japan and Europe.</small>
   </div>
 </footer>
 
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  const translations = {
+    en: {
+      brandTagline: "B2B differentiation marketing between Japan and Europe.",
+      navIntro: "Intro",
+      navServices: "Services",
+      navProof: "Proof",
+      navContact: "Contact",
+      navMore: "More",
+
+      heroTitle: "Differentiation marketing for B2B companies entering unfamiliar markets.",
+      heroText: "Yurimatsu helps Japanese and European B2B companies clarify how they should be positioned, understood, and trusted in a different market context. We combine marketing strategy, intercultural market insight, and neuromarketing-informed analysis to make complex B2B offers easier to communicate.",
+      heroButtonPrimary: "Start a conversation",
+      heroButtonSecondary: "See how we work",
+
+      pillOne: "B2B differentiation",
+      pillTwo: "Japan–Europe communication",
+      pillThree: "Evidence-informed marketing",
+
+      whatYouGetTitle: "What we build",
+      whatYouGetText: "A clearer market-facing strategy: who you are for, why your offer is different, and how that message should appear across website, pitch, content, and outreach.",
+      cardOneTitle: "Positioning",
+      cardOneText: "Define the market role, value logic, and differentiation angle.",
+      cardTwoTitle: "Communication",
+      cardTwoText: "Translate the strategy into website copy, pitch structure, and outreach messaging.",
+
+      servicesTitle: "Services",
+      servicesLead: "Focused support for B2B companies that need clearer differentiation before entering or growing in another market.",
+      serviceOneTitle: "Differentiation audit",
+      serviceOneText: "We review your current website, offer, competitors, and market message to identify where your positioning is unclear, generic, or difficult to trust.",
+      serviceTwoTitle: "Market communication strategy",
+      serviceTwoText: "We structure your value proposition for a specific B2B audience, with attention to cultural expectations, decision criteria, and trust signals.",
+      serviceThreeTitle: "Website and pitch messaging",
+      serviceThreeText: "We turn the strategy into practical copy blocks, page structure, pitch wording, and outreach angles that can be used immediately.",
+
+      proofTitle: "Current focus",
+      proofLead: "Yurimatsu is in development. Our current work focuses on building a practical service model for B2B companies that need stronger market positioning between Japan and Europe.",
+      proofOneTitle: "Research-based",
+      proofOneText: "We use marketing, consumer psychology, and intercultural business research to support strategic choices.",
+      proofTwoTitle: "Practical output",
+      proofTwoText: "The result is not only analysis. We create usable messaging, page structures, and communication material.",
+      proofThreeTitle: "International bridge",
+      proofThreeText: "Our founding team connects Dutch, German, and Japanese perspectives for cross-market communication.",
+
+      contactTitle: "Contact",
+      contactLead: "For companies exploring Japan–Europe B2B marketing, differentiation, or market communication.",
+      contactButtonOne: "Email Yurimatsu",
+      contactButtonTwo: "Read more",
+
+      footerText: "B2B differentiation marketing between Japan and Europe."
+    },
+
+    ja: {
+      brandTagline: "日本と欧州をつなぐB2B差別化マーケティング。",
+      navIntro: "概要",
+      navServices: "サービス",
+      navProof: "現在の取り組み",
+      navContact: "お問い合わせ",
+      navMore: "詳細",
+
+      heroTitle: "未知の市場に進出するB2B企業のための差別化マーケティング。",
+      heroText: "Yurimatsuは、日本と欧州のB2B企業が異なる市場環境でどのように位置づけられ、理解され、信頼されるべきかを明確にします。マーケティング戦略、異文化市場理解、ニューロマーケティングに基づく視点を組み合わせ、複雑なB2Bサービスを伝わりやすい形に整理します。",
+      heroButtonPrimary: "相談する",
+      heroButtonSecondary: "進め方を見る",
+
+      pillOne: "B2B差別化",
+      pillTwo: "日欧コミュニケーション",
+      pillThree: "根拠に基づくマーケティング",
+
+      whatYouGetTitle: "提供するもの",
+      whatYouGetText: "誰に向けたサービスなのか、なぜ競合と違うのか、そしてそのメッセージをウェブサイト、ピッチ、コンテンツ、営業コミュニケーションでどう表現するかを明確にします。",
+      cardOneTitle: "ポジショニング",
+      cardOneText: "市場での役割、提供価値、差別化の軸を整理します。",
+      cardTwoTitle: "コミュニケーション",
+      cardTwoText: "戦略をウェブサイト文言、ピッチ構成、営業メッセージに落とし込みます。",
+
+      servicesTitle: "サービス",
+      servicesLead: "海外市場への参入や成長に向けて、より明確な差別化が必要なB2B企業を支援します。",
+      serviceOneTitle: "差別化診断",
+      serviceOneText: "現在のウェブサイト、提供サービス、競合、マーケットメッセージを確認し、ポジショニングが曖昧・一般的・信頼されにくい部分を特定します。",
+      serviceTwoTitle: "市場コミュニケーション戦略",
+      serviceTwoText: "特定のB2B対象層に向けて、文化的期待、意思決定基準、信頼形成の要素を踏まえた価値提案を構築します。",
+      serviceThreeTitle: "ウェブサイト・ピッチ文言",
+      serviceThreeText: "戦略を実際に使えるコピー、ページ構成、ピッチ表現、営業メッセージに変換します。",
+
+      proofTitle: "現在の取り組み",
+      proofLead: "Yurimatsuは現在開発段階にあります。日本と欧州の間で、より強い市場ポジショニングを必要とするB2B企業に向けた実践的なサービスモデルを構築しています。",
+      proofOneTitle: "リサーチベース",
+      proofOneText: "マーケティング、消費者心理、異文化ビジネス研究を活用し、戦略的な意思決定を支援します。",
+      proofTwoTitle: "実用的なアウトプット",
+      proofTwoText: "分析だけで終わらせず、実際に使えるメッセージ、ページ構成、コミュニケーション素材を作成します。",
+      proofThreeTitle: "国際的な橋渡し",
+      proofThreeText: "オランダ、ドイツ、日本の視点を組み合わせ、異なる市場間のコミュニケーションを支援します。",
+
+      contactTitle: "お問い合わせ",
+      contactLead: "日欧B2Bマーケティング、差別化、市場コミュニケーションについて検討している企業の方へ。",
+      contactButtonOne: "メールする",
+      contactButtonTwo: "詳細を見る",
+
+      footerText: "日本と欧州をつなぐB2B差別化マーケティング。"
+    }
+  };
+
+  function setLanguage(lang) {
+    document.documentElement.lang = lang === "ja" ? "ja" : "en";
+
+    document.querySelectorAll("[data-i18n]").forEach((element) => {
+      const key = element.getAttribute("data-i18n");
+      element.textContent = translations[lang][key];
+    });
+
+    document.querySelectorAll(".lang-btn").forEach((button) => {
+      button.classList.toggle("active", button.dataset.lang === lang);
+    });
+
+    localStorage.setItem("siteLanguage", lang);
+  }
+
+  document.querySelectorAll(".lang-btn").forEach((button) => {
+    button.addEventListener("click", () => {
+      setLanguage(button.dataset.lang);
+    });
+  });
+
+  const savedLanguage = localStorage.getItem("siteLanguage") || "en";
+  setLanguage(savedLanguage);
 </script>
 
 </body>
 </html>
-
