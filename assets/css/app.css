@@ -432,71 +432,43 @@ a{ color:inherit; }
     font-size: 1rem;
   }
 }
-/* Gecko route scroll animation */
+/* Gecko route debug */
 .gecko-route {
   position: fixed;
-  top: 18vh;
+  top: 25vh;
   right: 4vw;
-  width: 220px;
-  height: 520px;
+  width: 260px;
+  height: 560px;
   pointer-events: none;
-  z-index: 60;
+  z-index: 999999;
+  background: rgba(255, 0, 0, 0.12);
 }
 
 .gecko-pair {
   position: absolute;
-  width: 110px;
+  width: 130px;
   height: auto;
-  opacity: 0;
-  transition:
-    opacity 0.16s ease,
-    transform 0.16s ease;
-  filter: none;
+  opacity: 1 !important;
+  filter: none !important;
+  outline: 2px solid red;
 }
 
-/* Walking route */
 .pair-1 {
   top: 0;
-  left: 18px;
+  left: 20px;
 }
 
 .pair-2 {
-  top: 115px;
-  left: 72px;
+  top: 130px;
+  left: 90px;
 }
 
 .pair-3 {
-  top: 230px;
+  top: 260px;
   left: 20px;
 }
 
 .pair-4 {
-  top: 345px;
-  left: 74px;
-}
-
-.gecko-pair.is-visible {
-  opacity: 0.62;
-}
-
-.gecko-route.walking-down .gecko-pair.is-visible {
-  transform: translateY(8px);
-}
-
-.gecko-route.walking-up {
-  transform: rotate(180deg);
-}
-
-.gecko-route.walking-up .gecko-pair {
-  transform: rotate(180deg);
-}
-
-.gecko-route.walking-up .gecko-pair.is-visible {
-  transform: rotate(180deg) translateY(8px);
-}
-
-@media (max-width: 760px) {
-  .gecko-route {
-    display: none;
-  }
+  top: 390px;
+  left: 90px;
 }
