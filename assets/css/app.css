@@ -435,8 +435,8 @@ a{ color:inherit; }
 /* Gecko footprint scroll animation */
 .gecko-walk {
   position: fixed;
-  top: 12vh;
-  right: 4vw;
+ top: 18vh;
+right: 3vw;
   width: min(34vw, 420px);
   aspect-ratio: 1 / 1;
   pointer-events: none;
