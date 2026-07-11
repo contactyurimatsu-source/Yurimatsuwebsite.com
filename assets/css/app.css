@@ -451,7 +451,12 @@ a{ color:inherit; }
   transition:
     opacity 0.22s ease,
     transform 0.22s ease;
-  filter: invert(1);
+  filter: none;
+}
+}
+
+.gecko-print.is-visible {
+  opacity: 0.85;
 }
 
 /* Route positions */
