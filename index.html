@@ -343,74 +343,52 @@
   const savedLanguage = localStorage.getItem("siteLanguage") || "en";
   setLanguage(savedLanguage);
   
-// Gecko dynamic trail scroll animation
-const geckoRoute = document.querySelector(".gecko-route");
+  
+// Gecko loop trail scroll effect
+const geckoLoop = document.querySelector(".gecko-loop");
+const geckoLoopTrack = document.querySelector(".gecko-loop-track");
 
 let lastScrollY = window.scrollY;
-let stepIndex = 0;
-let lastStepTime = 0;
-
-const geckoPath = [
-  { top: 0, left: 20, img: "./images/gecko/gecko-pair-1.png" },
-  { top: 95, left: 72, img: "./images/gecko/gecko-pair-2.png" },
-  { top: 190, left: 22, img: "./images/gecko/gecko-pair-1.png" },
-  { top: 285, left: 74, img: "./images/gecko/gecko-pair-2.png" }
-];
-
-function spawnGeckoStep(direction) {
-  if (!geckoRoute) return;
-
-  const pathIndex = direction === "down"
-    ? stepIndex % geckoPath.length
-    : (geckoPath.length - 1 - (stepIndex % geckoPath.length));
-
-  const point = geckoPath[pathIndex];
-
-  const print = document.createElement("img");
-  print.src = point.img;
-  print.alt = "";
-  print.className = "gecko-trail";
-  print.style.top = `${point.top}px`;
-  print.style.left = `${point.left}px`;
-
-  if (direction === "up") {
-    print.style.transform = "rotate(180deg)";
-  }
-
-  geckoRoute.appendChild(print);
-
-  requestAnimationFrame(() => {
-    print.classList.add("is-visible");
-  });
-
-  setTimeout(() => {
-    print.classList.remove("is-visible");
-  }, 420);
-
-  setTimeout(() => {
-    print.remove();
-  }, 700);
-
-  stepIndex++;
-}
+let geckoOffset = 0;
+let geckoFadeTimer;
 
 window.addEventListener("scroll", () => {
+  if (!geckoLoop || !geckoLoopTrack) return;
+
   const currentScrollY = window.scrollY;
-  const scrollDifference = Math.abs(currentScrollY - lastScrollY);
-  const direction = currentScrollY > lastScrollY ? "down" : "up";
-  const now = Date.now();
+  const difference = currentScrollY - lastScrollY;
+  const direction = difference > 0 ? "down" : "up";
 
-  if (scrollDifference < 6) return;
+  if (Math.abs(difference) < 4) return;
 
-  if (currentScrollY < window.innerHeight * 0.45) {
+  // Start after the landing section begins to pass
+  if (currentScrollY < window.innerHeight * 0.55) {
+    geckoLoop.classList.remove("is-active");
     lastScrollY = currentScrollY;
     return;
   }
 
-  if (now - lastStepTime > 85) {
-    spawnGeckoStep(direction);
-    lastStepTime = now;
+  geckoLoop.classList.add("is-active");
+
+  // Image itself walks upward. Rotate for downward scroll.
+  if (direction === "down") {
+    geckoLoopTrack.style.setProperty("--trail-rotation", "180deg");
+    geckoOffset -= 10;
+  } else {
+    geckoLoopTrack.style.setProperty("--trail-rotation", "0deg");
+    geckoOffset += 10;
   }
+
+  // Keeps the loop from drifting forever
+  if (geckoOffset < -600) geckoOffset = 0;
+  if (geckoOffset > 0) geckoOffset = -600;
+
+  geckoLoopTrack.style.setProperty("--trail-offset", `${geckoOffset}px`);
+
+  clearTimeout(geckoFadeTimer);
+  geckoFadeTimer = setTimeout(() => {
+    geckoLoop.classList.remove("is-active");
+  }, 550);
 
   lastScrollY = currentScrollY;
 });
