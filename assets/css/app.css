@@ -432,43 +432,34 @@ a{ color:inherit; }
     font-size: 1rem;
   }
 }
-/* Gecko route debug */
+/* Gecko route scroll animation */
 .gecko-route {
   position: fixed;
-  top: 25vh;
-  right: 4vw;
-  width: 260px;
-  height: 560px;
+  top: 18vh;
+  right: 3vw;
+  width: 190px;
+  height: 480px;
   pointer-events: none;
-  z-index: 999999;
-  background: rgba(255, 0, 0, 0.12);
+  z-index: 60;
 }
 
-.gecko-pair {
+.gecko-trail {
   position: absolute;
-  width: 130px;
+  width: 95px;
   height: auto;
-  opacity: 1 !important;
-  filter: none !important;
-  outline: 2px solid red;
+  opacity: 0;
+  filter: none;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
 }
 
-.pair-1 {
-  top: 0;
-  left: 20px;
+.gecko-trail.is-visible {
+  opacity: 0.65;
 }
 
-.pair-2 {
-  top: 130px;
-  left: 90px;
-}
-
-.pair-3 {
-  top: 260px;
-  left: 20px;
-}
-
-.pair-4 {
-  top: 390px;
-  left: 90px;
+@media (max-width: 760px) {
+  .gecko-route {
+    display: none;
+  }
 }
