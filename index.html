@@ -342,65 +342,61 @@
   const savedLanguage = localStorage.getItem("siteLanguage") || "en";
   setLanguage(savedLanguage);
   
-  // Gecko footprint scroll animation
-const geckoWalk = document.querySelector(".gecko-walk");
-const geckoSteps = document.querySelectorAll(".gecko-step");
+// Gecko route scroll animation
+const geckoRoute = document.querySelector(".gecko-route");
+const geckoPrints = document.querySelectorAll(".gecko-print");
 
 let lastScrollY = window.scrollY;
-let currentStep = 0;
-let lastStepTime = 0;
-let fadeTimers = [];
+let currentPrint = 0;
+let lastPrintTime = 0;
+let printTimers = [];
 
-function clearGeckoSteps() {
-  geckoSteps.forEach((step) => step.classList.remove("is-visible"));
-  fadeTimers.forEach((timer) => clearTimeout(timer));
-  fadeTimers = [];
+function clearGeckoPrints() {
+  geckoPrints.forEach((print) => print.classList.remove("is-visible"));
+  printTimers.forEach((timer) => clearTimeout(timer));
+  printTimers = [];
 }
 
-function showGeckoStep(direction) {
-  if (!geckoWalk || geckoSteps.length === 0) return;
+function showGeckoPrint(direction) {
+  if (!geckoRoute || geckoPrints.length === 0) return;
 
-  geckoWalk.classList.toggle("walking-down", direction === "down");
-  geckoWalk.classList.toggle("walking-up", direction === "up");
+  geckoRoute.classList.toggle("walking-down", direction === "down");
+  geckoRoute.classList.toggle("walking-up", direction === "up");
 
-  const step = geckoSteps[currentStep];
+  const print = geckoPrints[currentPrint];
+  print.classList.add("is-visible");
 
-  step.classList.add("is-visible");
+  const timer = setTimeout(() => {
+    print.classList.remove("is-visible");
+  }, 520);
 
-  const fadeTimer = setTimeout(() => {
-    step.classList.remove("is-visible");
-  }, 900);
-
-  fadeTimers.push(fadeTimer);
+  printTimers.push(timer);
 
   if (direction === "down") {
-    currentStep = (currentStep + 1) % geckoSteps.length;
+    currentPrint = (currentPrint + 1) % geckoPrints.length;
   } else {
-    currentStep = (currentStep - 1 + geckoSteps.length) % geckoSteps.length;
+    currentPrint = (currentPrint - 1 + geckoPrints.length) % geckoPrints.length;
   }
 }
 
 window.addEventListener("scroll", () => {
   const currentScrollY = window.scrollY;
+  const scrollDifference = Math.abs(currentScrollY - lastScrollY);
   const direction = currentScrollY > lastScrollY ? "down" : "up";
   const now = Date.now();
 
-  if (Math.abs(currentScrollY - lastScrollY) < 8) return;
+  if (scrollDifference < 6) return;
 
   if (currentScrollY < window.innerHeight * 0.45) {
-    clearGeckoSteps();
+    clearGeckoPrints();
     lastScrollY = currentScrollY;
     return;
   }
 
-  if (now - lastStepTime > 170) {
-    showGeckoStep(direction);
-    lastStepTime = now;
+  if (now - lastPrintTime > 95) {
+    showGeckoPrint(direction);
+    lastPrintTime = now;
   }
 
   lastScrollY = currentScrollY;
 });
-</script>
-
-</body>
-</html>
