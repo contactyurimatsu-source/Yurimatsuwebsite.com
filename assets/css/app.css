@@ -432,49 +432,71 @@ a{ color:inherit; }
     font-size: 1rem;
   }
 }
-/* Gecko footprint scroll animation */
-.gecko-walk {
+/* Gecko route scroll animation */
+.gecko-route {
   position: fixed;
- top: 18vh;
-right: 3vw;
-  width: min(34vw, 420px);
-  aspect-ratio: 1 / 1;
+  top: 18vh;
+  right: 4vw;
+  width: 180px;
+  height: 360px;
   pointer-events: none;
   z-index: 20;
 }
 
-.gecko-step {
+.gecko-print {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  width: 54px;
+  height: auto;
   opacity: 0;
-  transform: translateY(0);
   transition:
-    opacity 0.35s ease,
-    transform 0.35s ease;
+    opacity 0.22s ease,
+    transform 0.22s ease;
   filter: invert(1);
 }
 
-.gecko-step.is-visible {
-  opacity: 0.22;
+/* Route positions */
+.print-front-left {
+  top: 0;
+  left: 34px;
 }
 
-.gecko-walk.walking-down .gecko-step.is-visible {
+.print-back-right {
+  top: 72px;
+  left: 86px;
+}
+
+.print-front-right {
+  top: 144px;
+  left: 38px;
+}
+
+.print-back-left {
+  top: 216px;
+  left: 90px;
+}
+
+.gecko-print.is-visible {
+  opacity: 0.38;
+}
+
+.gecko-route.walking-down .gecko-print.is-visible {
   transform: translateY(8px);
 }
 
-.gecko-walk.walking-up .gecko-step {
+.gecko-route.walking-up {
   transform: rotate(180deg);
 }
 
-.gecko-walk.walking-up .gecko-step.is-visible {
-  transform: translateY(-8px) rotate(180deg);
+.gecko-route.walking-up .gecko-print {
+  transform: rotate(180deg);
+}
+
+.gecko-route.walking-up .gecko-print.is-visible {
+  transform: rotate(180deg) translateY(8px);
 }
 
 @media (max-width: 760px) {
-  .gecko-walk {
+  .gecko-route {
     display: none;
   }
 }
