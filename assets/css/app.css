@@ -435,73 +435,40 @@ a{ color:inherit; }
 /* Gecko route scroll animation */
 .gecko-route {
   position: fixed;
-  top: 18vh;
+  top: 30vh;
   right: 4vw;
-  width: 180px;
-  height: 360px;
+  width: 220px;
+  height: 420px;
   pointer-events: none;
-  z-index: 20;
+  z-index: 999999;
+  background: rgba(255, 0, 0, 0.08);
 }
 
 .gecko-print {
   position: absolute;
-  width: 54px;
+  width: 70px;
   height: auto;
-  opacity: 0;
-  transition:
-    opacity 0.22s ease,
-    transform 0.22s ease;
-  filter: none;
-}
+  opacity: 1 !important;
+  filter: none !important;
+  outline: 1px solid red;
 }
 
-.gecko-print.is-visible {
-  opacity: 0.85;
-}
-
-/* Route positions */
 .print-front-left {
   top: 0;
-  left: 34px;
+  left: 30px;
 }
 
 .print-back-right {
-  top: 72px;
-  left: 86px;
+  top: 90px;
+  left: 100px;
 }
 
 .print-front-right {
-  top: 144px;
-  left: 38px;
+  top: 180px;
+  left: 30px;
 }
 
 .print-back-left {
-  top: 216px;
-  left: 90px;
-}
-
-.gecko-print.is-visible {
-  opacity: 0.38;
-}
-
-.gecko-route.walking-down .gecko-print.is-visible {
-  transform: translateY(8px);
-}
-
-.gecko-route.walking-up {
-  transform: rotate(180deg);
-}
-
-.gecko-route.walking-up .gecko-print {
-  transform: rotate(180deg);
-}
-
-.gecko-route.walking-up .gecko-print.is-visible {
-  transform: rotate(180deg) translateY(8px);
-}
-
-@media (max-width: 760px) {
-  .gecko-route {
-    display: none;
-  }
+  top: 270px;
+  left: 100px;
 }
