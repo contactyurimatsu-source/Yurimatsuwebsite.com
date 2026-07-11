@@ -435,63 +435,64 @@ a{ color:inherit; }
 /* Gecko route scroll animation */
 .gecko-route {
   position: fixed;
-  top: 24vh;
+  top: 18vh;
   right: 4vw;
-  width: 180px;
-  height: 360px;
+  width: 220px;
+  height: 520px;
   pointer-events: none;
   z-index: 60;
 }
 
-.gecko-print {
+.gecko-pair {
   position: absolute;
-  width: 58px;
+  width: 110px;
   height: auto;
   opacity: 0;
   transition:
-    opacity 0.18s ease,
-    transform 0.18s ease;
+    opacity 0.16s ease,
+    transform 0.16s ease;
   filter: none;
 }
 
-.print-front-left {
+/* Walking route */
+.pair-1 {
   top: 0;
-  left: 26px;
+  left: 18px;
 }
 
-.print-back-right {
-  top: 78px;
-  left: 88px;
+.pair-2 {
+  top: 115px;
+  left: 72px;
 }
 
-.print-front-right {
-  top: 156px;
-  left: 30px;
+.pair-3 {
+  top: 230px;
+  left: 20px;
 }
 
-.print-back-left {
-  top: 234px;
-  left: 92px;
+.pair-4 {
+  top: 345px;
+  left: 74px;
 }
 
-.gecko-print.is-visible {
-  opacity: 0.55;
+.gecko-pair.is-visible {
+  opacity: 0.62;
 }
 
-.gecko-route.walking-down .gecko-print.is-visible {
-  transform: translateY(6px);
+.gecko-route.walking-down .gecko-pair.is-visible {
+  transform: translateY(8px);
 }
 
 .gecko-route.walking-up {
   transform: rotate(180deg);
 }
 
-.gecko-route.walking-up .gecko-print {
+.gecko-route.walking-up .gecko-pair {
   transform: rotate(180deg);
 }
 
-.gecko-route.walking-up .gecko-print.is-visible {
-  transform: rotate(180deg) translateY(6px);
+.gecko-route.walking-up .gecko-pair.is-visible {
+  transform: rotate(180deg) translateY(8px);
 }
 
 @media (max-width: 760px) {
