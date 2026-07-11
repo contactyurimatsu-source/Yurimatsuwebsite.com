@@ -344,12 +344,12 @@
   setLanguage(savedLanguage);
   
   
-// Gecko loop trail scroll effect
+// Gecko walking-window scroll effect
 const geckoLoop = document.querySelector(".gecko-loop");
 const geckoLoopTrack = document.querySelector(".gecko-loop-track");
 
 let lastScrollY = window.scrollY;
-let geckoOffset = 0;
+let geckoOffset = -80;
 let geckoFadeTimer;
 
 window.addEventListener("scroll", () => {
@@ -357,11 +357,11 @@ window.addEventListener("scroll", () => {
 
   const currentScrollY = window.scrollY;
   const difference = currentScrollY - lastScrollY;
-  const direction = difference > 0 ? "down" : "up";
 
   if (Math.abs(difference) < 4) return;
 
-  // Start after the landing section begins to pass
+  const direction = difference > 0 ? "down" : "up";
+
   if (currentScrollY < window.innerHeight * 0.55) {
     geckoLoop.classList.remove("is-active");
     lastScrollY = currentScrollY;
@@ -370,25 +370,27 @@ window.addEventListener("scroll", () => {
 
   geckoLoop.classList.add("is-active");
 
-  // Image itself walks upward. Rotate for downward scroll.
   if (direction === "down") {
     geckoLoopTrack.style.setProperty("--trail-rotation", "180deg");
-    geckoOffset -= 10;
+    geckoOffset -= 18;
   } else {
     geckoLoopTrack.style.setProperty("--trail-rotation", "0deg");
-    geckoOffset += 10;
+    geckoOffset += 18;
   }
 
-  // Keeps the loop from drifting forever
-  if (geckoOffset < -600) geckoOffset = 0;
-  if (geckoOffset > 0) geckoOffset = -600;
+  /*
+    This keeps the repeated trail cycling.
+    Adjust -900 if the image is much taller or shorter.
+  */
+  if (geckoOffset < -900) geckoOffset = -80;
+  if (geckoOffset > -80) geckoOffset = -900;
 
   geckoLoopTrack.style.setProperty("--trail-offset", `${geckoOffset}px`);
 
   clearTimeout(geckoFadeTimer);
   geckoFadeTimer = setTimeout(() => {
     geckoLoop.classList.remove("is-active");
-  }, 550);
+  }, 450);
 
   lastScrollY = currentScrollY;
 });
