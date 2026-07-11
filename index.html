@@ -337,41 +337,55 @@
   const savedLanguage = localStorage.getItem("siteLanguage") || "en";
   setLanguage(savedLanguage);
   
-// Gecko route scroll animation
+// Gecko dynamic trail scroll animation
 const geckoRoute = document.querySelector(".gecko-route");
-const geckoPrints = document.querySelectorAll(".gecko-print");
 
 let lastScrollY = window.scrollY;
-let currentPrint = 0;
-let lastPrintTime = 0;
-let printTimers = [];
+let stepIndex = 0;
+let lastStepTime = 0;
 
-function clearGeckoPrints() {
-  geckoPrints.forEach((print) => print.classList.remove("is-visible"));
-  printTimers.forEach((timer) => clearTimeout(timer));
-  printTimers = [];
-}
+const geckoPath = [
+  { top: 0, left: 20, img: "./images/gecko/gecko-pair-1.png" },
+  { top: 95, left: 72, img: "./images/gecko/gecko-pair-2.png" },
+  { top: 190, left: 22, img: "./images/gecko/gecko-pair-1.png" },
+  { top: 285, left: 74, img: "./images/gecko/gecko-pair-2.png" }
+];
 
-function showGeckoPrint(direction) {
-  if (!geckoRoute || geckoPrints.length === 0) return;
+function spawnGeckoStep(direction) {
+  if (!geckoRoute) return;
 
-  geckoRoute.classList.toggle("walking-down", direction === "down");
-  geckoRoute.classList.toggle("walking-up", direction === "up");
+  const pathIndex = direction === "down"
+    ? stepIndex % geckoPath.length
+    : (geckoPath.length - 1 - (stepIndex % geckoPath.length));
 
-  const print = geckoPrints[currentPrint];
-  print.classList.add("is-visible");
+  const point = geckoPath[pathIndex];
 
-  const timer = setTimeout(() => {
-    print.classList.remove("is-visible");
-  }, 520);
+  const print = document.createElement("img");
+  print.src = point.img;
+  print.alt = "";
+  print.className = "gecko-trail";
+  print.style.top = `${point.top}px`;
+  print.style.left = `${point.left}px`;
 
-  printTimers.push(timer);
-
-  if (direction === "down") {
-    currentPrint = (currentPrint + 1) % geckoPrints.length;
-  } else {
-    currentPrint = (currentPrint - 1 + geckoPrints.length) % geckoPrints.length;
+  if (direction === "up") {
+    print.style.transform = "rotate(180deg)";
   }
+
+  geckoRoute.appendChild(print);
+
+  requestAnimationFrame(() => {
+    print.classList.add("is-visible");
+  });
+
+  setTimeout(() => {
+    print.classList.remove("is-visible");
+  }, 420);
+
+  setTimeout(() => {
+    print.remove();
+  }, 700);
+
+  stepIndex++;
 }
 
 window.addEventListener("scroll", () => {
@@ -383,19 +397,14 @@ window.addEventListener("scroll", () => {
   if (scrollDifference < 6) return;
 
   if (currentScrollY < window.innerHeight * 0.45) {
-    clearGeckoPrints();
     lastScrollY = currentScrollY;
     return;
   }
 
-  if (now - lastPrintTime > 95) {
-    showGeckoPrint(direction);
-    lastPrintTime = now;
+  if (now - lastStepTime > 85) {
+    spawnGeckoStep(direction);
+    lastStepTime = now;
   }
 
   lastScrollY = currentScrollY;
 });
-  </script>
-
-</body>
-</html>
