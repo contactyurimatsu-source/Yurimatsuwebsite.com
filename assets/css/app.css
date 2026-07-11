@@ -435,40 +435,67 @@ a{ color:inherit; }
 /* Gecko route scroll animation */
 .gecko-route {
   position: fixed;
-  top: 30vh;
+  top: 24vh;
   right: 4vw;
-  width: 220px;
-  height: 420px;
+  width: 180px;
+  height: 360px;
   pointer-events: none;
-  z-index: 999999;
-  background: rgba(255, 0, 0, 0.08);
+  z-index: 60;
 }
 
 .gecko-print {
   position: absolute;
-  width: 70px;
+  width: 58px;
   height: auto;
-  opacity: 1 !important;
-  filter: none !important;
-  outline: 1px solid red;
+  opacity: 0;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+  filter: none;
 }
 
 .print-front-left {
   top: 0;
-  left: 30px;
+  left: 26px;
 }
 
 .print-back-right {
-  top: 90px;
-  left: 100px;
+  top: 78px;
+  left: 88px;
 }
 
 .print-front-right {
-  top: 180px;
+  top: 156px;
   left: 30px;
 }
 
 .print-back-left {
-  top: 270px;
-  left: 100px;
+  top: 234px;
+  left: 92px;
+}
+
+.gecko-print.is-visible {
+  opacity: 0.55;
+}
+
+.gecko-route.walking-down .gecko-print.is-visible {
+  transform: translateY(6px);
+}
+
+.gecko-route.walking-up {
+  transform: rotate(180deg);
+}
+
+.gecko-route.walking-up .gecko-print {
+  transform: rotate(180deg);
+}
+
+.gecko-route.walking-up .gecko-print.is-visible {
+  transform: rotate(180deg) translateY(6px);
+}
+
+@media (max-width: 760px) {
+  .gecko-route {
+    display: none;
+  }
 }
