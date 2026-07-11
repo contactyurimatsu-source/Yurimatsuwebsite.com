@@ -340,6 +340,20 @@
 // Gecko dynamic trail scroll animation
 const geckoRoute = document.querySelector(".gecko-route");
 
+  console.log("Gecko route found:", geckoRoute);
+
+const testPrint = document.createElement("img");
+testPrint.src = "./images/gecko/gecko-pair-1.png";
+testPrint.alt = "";
+testPrint.style.position = "fixed";
+testPrint.style.top = "200px";
+testPrint.style.right = "80px";
+testPrint.style.width = "160px";
+testPrint.style.zIndex = "999999";
+testPrint.style.opacity = "1";
+testPrint.style.border = "2px solid red";
+document.body.appendChild(testPrint);
+
 let lastScrollY = window.scrollY;
 let stepIndex = 0;
 let lastStepTime = 0;
