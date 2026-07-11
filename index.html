@@ -341,6 +341,65 @@
 
   const savedLanguage = localStorage.getItem("siteLanguage") || "en";
   setLanguage(savedLanguage);
+  
+  // Gecko footprint scroll animation
+const geckoWalk = document.querySelector(".gecko-walk");
+const geckoSteps = document.querySelectorAll(".gecko-step");
+
+let lastScrollY = window.scrollY;
+let currentStep = 0;
+let lastStepTime = 0;
+let fadeTimers = [];
+
+function clearGeckoSteps() {
+  geckoSteps.forEach((step) => step.classList.remove("is-visible"));
+  fadeTimers.forEach((timer) => clearTimeout(timer));
+  fadeTimers = [];
+}
+
+function showGeckoStep(direction) {
+  if (!geckoWalk || geckoSteps.length === 0) return;
+
+  geckoWalk.classList.toggle("walking-down", direction === "down");
+  geckoWalk.classList.toggle("walking-up", direction === "up");
+
+  const step = geckoSteps[currentStep];
+
+  step.classList.add("is-visible");
+
+  const fadeTimer = setTimeout(() => {
+    step.classList.remove("is-visible");
+  }, 900);
+
+  fadeTimers.push(fadeTimer);
+
+  if (direction === "down") {
+    currentStep = (currentStep + 1) % geckoSteps.length;
+  } else {
+    currentStep = (currentStep - 1 + geckoSteps.length) % geckoSteps.length;
+  }
+}
+
+window.addEventListener("scroll", () => {
+  const currentScrollY = window.scrollY;
+  const direction = currentScrollY > lastScrollY ? "down" : "up";
+  const now = Date.now();
+
+  if (Math.abs(currentScrollY - lastScrollY) < 8) return;
+
+  if (currentScrollY < window.innerHeight * 0.45) {
+    clearGeckoSteps();
+    lastScrollY = currentScrollY;
+    return;
+  }
+
+  if (now - lastStepTime > 170) {
+    showGeckoStep(direction);
+    lastStepTime = now;
+  }
+
+  lastScrollY = currentScrollY;
+});
 </script>
 
 </body>
