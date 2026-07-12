@@ -432,3 +432,129 @@ a{ color:inherit; }
     font-size: 1rem;
   }
 }
+/* Page-attached gecko walking trail */
+main {
+  position: relative;
+  isolation: isolate;
+}
+
+main > section {
+  position: relative;
+  z-index: 1;
+}
+
+.gecko-walk {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+.gecko-walk-window {
+  --window-top: 0px;
+  --window-side: 6%;
+
+  position: absolute;
+  top: var(--window-top);
+  right: var(--window-side);
+  width: 150px;
+  height: 94px;
+  overflow: hidden;
+  opacity: 0.08;
+  transform: rotate(4deg);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+
+  /*
+    The soft mask prevents the crop from looking like a hard rectangular
+    viewport while still showing only a small footprint group.
+  */
+  -webkit-mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 18%,
+      #000 82%,
+      transparent 100%
+    );
+  mask-image:
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 18%,
+      #000 82%,
+      transparent 100%
+    );
+}
+
+.gecko-walk-window--left {
+  right: auto;
+  left: var(--window-side);
+  transform: rotate(-4deg) scaleX(-1);
+}
+
+.gecko-walk-window img {
+  --trail-offset: 0px;
+
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: block;
+  width: 340px;
+  max-width: none;
+  height: auto;
+  opacity: 0.72;
+  transform:
+    translateX(-50%)
+    translateY(var(--trail-offset));
+  transition: transform 130ms steps(1, end);
+}
+
+.gecko-walk.is-walking .gecko-walk-window {
+  opacity: 0.17;
+}
+
+.gecko-walk[data-direction="down"].is-walking
+  .gecko-walk-window:not(.gecko-walk-window--left) {
+  transform: translateY(3px) rotate(4deg);
+}
+
+.gecko-walk[data-direction="down"].is-walking
+  .gecko-walk-window--left {
+  transform: translateY(3px) rotate(-4deg) scaleX(-1);
+}
+
+.gecko-walk[data-direction="up"].is-walking
+  .gecko-walk-window:not(.gecko-walk-window--left) {
+  transform: translateY(-3px) rotate(4deg);
+}
+
+.gecko-walk[data-direction="up"].is-walking
+  .gecko-walk-window--left {
+  transform: translateY(-3px) rotate(-4deg) scaleX(-1);
+}
+
+@media (max-width: 760px) {
+  .gecko-walk-window {
+    width: 105px;
+    height: 82px;
+    opacity: 0.055;
+  }
+
+  .gecko-walk-window img {
+    width: 285px;
+  }
+
+  .gecko-walk.is-walking .gecko-walk-window {
+    opacity: 0.11;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gecko-walk {
+    display: none;
+  }
+}
