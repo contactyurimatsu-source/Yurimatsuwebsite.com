@@ -10,11 +10,7 @@
 
 <body>
 <div class="gecko-loop" aria-hidden="true">
-  <div class="gecko-loop-track">
-    <img src="./images/gecko/gecko-trail-loop.png" alt="">
-    <img src="./images/gecko/gecko-trail-loop.png" alt="">
-    <img src="./images/gecko/gecko-trail-loop.png" alt="">
-  </div>
+  <img src="./images/gecko/gecko-trail-loop.png" alt="">
 </div>
   <section class="visual-entry" id="top">
   <div class="visual-entry-bg" aria-hidden="true"></div>
@@ -344,56 +340,110 @@
   setLanguage(savedLanguage);
   
   
-// Gecko walking-window scroll effect
-const geckoLoop = document.querySelector(".gecko-loop");
-const geckoLoopTrack = document.querySelector(".gecko-loop-track");
+const geckoWalk = document.querySelector(".gecko-walk");
+const pageMain = document.querySelector("main");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-let lastScrollY = window.scrollY;
-let geckoOffset = -80;
-let geckoFadeTimer;
+if (geckoWalk && pageMain && !reduceMotion.matches) {
+  const FRAME_COUNT = 6;
+  const WINDOW_SPACING = 460;
+  const FRAME_HEIGHT = 94;
 
-window.addEventListener("scroll", () => {
-  if (!geckoLoop || !geckoLoopTrack) return;
+  let windows = [];
+  let frame = 0;
+  let lastScrollY = window.scrollY;
+  let accumulatedScroll = 0;
+  let fadeTimer = 0;
+  let ticking = false;
 
-  const currentScrollY = window.scrollY;
-  const difference = currentScrollY - lastScrollY;
+  function buildGeckoWindows() {
+    const requiredWindows = Math.ceil(pageMain.scrollHeight / WINDOW_SPACING);
 
-  if (Math.abs(difference) < 4) return;
+    if (requiredWindows === windows.length) return;
 
-  const direction = difference > 0 ? "down" : "up";
+    geckoWalk.replaceChildren();
 
-  if (currentScrollY < window.innerHeight * 0.55) {
-    geckoLoop.classList.remove("is-active");
+    windows = Array.from({ length: requiredWindows }, (_, index) => {
+      const windowElement = document.createElement("span");
+      const trailImage = document.createElement("img");
+
+      windowElement.className = "gecko-walk-window";
+      windowElement.style.setProperty(
+        "--window-top",
+        `${180 + index * WINDOW_SPACING}px`
+      );
+
+      windowElement.style.setProperty(
+        "--window-side",
+        `${5 + (index % 3) * 4}%`
+      );
+
+      windowElement.classList.toggle("gecko-walk-window--left", index % 2 !== 0);
+
+      trailImage.src = "./images/gecko/gecko-trail-loop.png";
+      trailImage.alt = "";
+      trailImage.decoding = "async";
+
+      windowElement.appendChild(trailImage);
+      geckoWalk.appendChild(windowElement);
+
+      return windowElement;
+    });
+
+    updateFrames();
+  }
+
+  function updateFrames() {
+    windows.forEach((windowElement, index) => {
+      const localFrame = (frame + index * 2) % FRAME_COUNT;
+      const image = windowElement.querySelector("img");
+
+      image.style.setProperty(
+        "--trail-offset",
+        `${localFrame * -FRAME_HEIGHT}px`
+      );
+    });
+  }
+
+  function animateGecko() {
+    ticking = false;
+
+    const currentScrollY = window.scrollY;
+    const scrollDelta = currentScrollY - lastScrollY;
+
     lastScrollY = currentScrollY;
-    return;
+    accumulatedScroll += scrollDelta;
+
+    if (Math.abs(accumulatedScroll) < 34) return;
+
+    const direction = accumulatedScroll > 0 ? 1 : -1;
+
+    frame = (frame + direction + FRAME_COUNT) % FRAME_COUNT;
+    accumulatedScroll = 0;
+
+    geckoWalk.dataset.direction = direction > 0 ? "down" : "up";
+    geckoWalk.classList.add("is-walking");
+
+    updateFrames();
+
+    window.clearTimeout(fadeTimer);
+    fadeTimer = window.setTimeout(() => {
+      geckoWalk.classList.remove("is-walking");
+    }, 190);
   }
 
-  geckoLoop.classList.add("is-active");
+  function handleScroll() {
+    if (ticking) return;
 
-  if (direction === "down") {
-    geckoLoopTrack.style.setProperty("--trail-rotation", "180deg");
-    geckoOffset -= 18;
-  } else {
-    geckoLoopTrack.style.setProperty("--trail-rotation", "0deg");
-    geckoOffset += 18;
+    ticking = true;
+    requestAnimationFrame(animateGecko);
   }
 
-  /*
-    This keeps the repeated trail cycling.
-    Adjust -900 if the image is much taller or shorter.
-  */
-  if (geckoOffset < -900) geckoOffset = -80;
-  if (geckoOffset > -80) geckoOffset = -900;
+  buildGeckoWindows();
 
-  geckoLoopTrack.style.setProperty("--trail-offset", `${geckoOffset}px`);
-
-  clearTimeout(geckoFadeTimer);
-  geckoFadeTimer = setTimeout(() => {
-    geckoLoop.classList.remove("is-active");
-  }, 450);
-
-  lastScrollY = currentScrollY;
-});
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  window.addEventListener("resize", buildGeckoWindows);
+}
   </script>
 </body>
 </html>
