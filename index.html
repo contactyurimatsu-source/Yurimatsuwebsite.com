@@ -340,109 +340,89 @@
   setLanguage(savedLanguage);
   
   
-const geckoWalk = document.querySelector(".gecko-walk");
-const pageMain = document.querySelector("main");
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+// Gecko discrete footprint walking cycle
+const geckoLoop = document.querySelector(".gecko-loop");
+const geckoImage = geckoLoop?.querySelector("img");
 
-if (geckoWalk && pageMain && !reduceMotion.matches) {
-  const FRAME_COUNT = 6;
-  const WINDOW_SPACING = 460;
-  const FRAME_HEIGHT = 94;
+if (
+  geckoLoop &&
+  geckoImage &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+  const SCROLL_PER_STEP = 36;
+  const APPROXIMATE_FRAME_HEIGHT = 58;
 
-  let windows = [];
-  let frame = 0;
   let lastScrollY = window.scrollY;
   let accumulatedScroll = 0;
-  let fadeTimer = 0;
+  let currentFrame = 0;
+  let frameCount = 1;
+  let frameDistance = 0;
   let ticking = false;
 
-  function buildGeckoWindows() {
-    const requiredWindows = Math.ceil(pageMain.scrollHeight / WINDOW_SPACING);
+  function measureTrail() {
+    const maximumOffset = Math.max(
+      0,
+      geckoImage.getBoundingClientRect().height - geckoLoop.clientHeight
+    );
 
-    if (requiredWindows === windows.length) return;
+    frameCount = Math.max(
+      2,
+      Math.floor(maximumOffset / APPROXIMATE_FRAME_HEIGHT) + 1
+    );
 
-    geckoWalk.replaceChildren();
+    frameDistance = maximumOffset / (frameCount - 1);
+    currentFrame = Math.min(currentFrame, frameCount - 1);
 
-    windows = Array.from({ length: requiredWindows }, (_, index) => {
-      const windowElement = document.createElement("span");
-      const trailImage = document.createElement("img");
-
-      windowElement.className = "gecko-walk-window";
-      windowElement.style.setProperty(
-        "--window-top",
-        `${180 + index * WINDOW_SPACING}px`
-      );
-
-      windowElement.style.setProperty(
-        "--window-side",
-        `${5 + (index % 3) * 4}%`
-      );
-
-      windowElement.classList.toggle("gecko-walk-window--left", index % 2 !== 0);
-
-      trailImage.src = "./images/gecko/gecko-trail-loop.png";
-      trailImage.alt = "";
-      trailImage.decoding = "async";
-
-      windowElement.appendChild(trailImage);
-      geckoWalk.appendChild(windowElement);
-
-      return windowElement;
-    });
-
-    updateFrames();
+    showCurrentFrame(false);
   }
 
-  function updateFrames() {
-    windows.forEach((windowElement, index) => {
-      const localFrame = (frame + index * 2) % FRAME_COUNT;
-      const image = windowElement.querySelector("img");
+  function showCurrentFrame(animate = true) {
+    const offset = -(currentFrame * frameDistance);
 
-      image.style.setProperty(
-        "--trail-offset",
-        `${localFrame * -FRAME_HEIGHT}px`
-      );
-    });
+    geckoImage.style.setProperty("--trail-offset", `${offset}px`);
+
+    if (!animate) return;
+
+    geckoLoop.classList.remove("is-stepping");
+    void geckoLoop.offsetWidth;
+    geckoLoop.classList.add("is-stepping");
   }
 
-  function animateGecko() {
+  function updateGecko() {
     ticking = false;
 
     const currentScrollY = window.scrollY;
-    const scrollDelta = currentScrollY - lastScrollY;
+    const difference = currentScrollY - lastScrollY;
 
     lastScrollY = currentScrollY;
-    accumulatedScroll += scrollDelta;
+    accumulatedScroll += difference;
 
-    if (Math.abs(accumulatedScroll) < 34) return;
+    if (Math.abs(accumulatedScroll) < SCROLL_PER_STEP) return;
 
     const direction = accumulatedScroll > 0 ? 1 : -1;
 
-    frame = (frame + direction + FRAME_COUNT) % FRAME_COUNT;
+    currentFrame =
+      (currentFrame + direction + frameCount) % frameCount;
+
     accumulatedScroll = 0;
-
-    geckoWalk.dataset.direction = direction > 0 ? "down" : "up";
-    geckoWalk.classList.add("is-walking");
-
-    updateFrames();
-
-    window.clearTimeout(fadeTimer);
-    fadeTimer = window.setTimeout(() => {
-      geckoWalk.classList.remove("is-walking");
-    }, 190);
+    showCurrentFrame(true);
   }
 
   function handleScroll() {
     if (ticking) return;
 
     ticking = true;
-    requestAnimationFrame(animateGecko);
+    requestAnimationFrame(updateGecko);
   }
 
-  buildGeckoWindows();
+  if (geckoImage.complete) {
+    measureTrail();
+  } else {
+    geckoImage.addEventListener("load", measureTrail, { once: true });
+  }
 
+  window.addEventListener("resize", measureTrail);
   window.addEventListener("scroll", handleScroll, { passive: true });
-  window.addEventListener("resize", buildGeckoWindows);
 }
   </script>
 </body>
