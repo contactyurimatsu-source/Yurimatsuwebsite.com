@@ -53,60 +53,6 @@
 </head>
 <body>
   <section class="visual-entry" id="top">
-    <div class="visual-entry-bg" aria-hidden="true"></div>
-
-    <div class="visual-entry-inner">
-      <div class="visual-entry-logo-wrap">
-        <img src="./images/yurimatsulogolarge.png" alt="Yurimatsu logo" class="visual-entry-logo">
-      </div>
-
-      <p class="visual-entry-kicker">Yurimatsu</p>
-
-      <h1>
-        B2B innovation marketing.
-      </h1>
-
-      <p>
-        We help B2B companies make their offer easier to understand, trust, and choose through clearer positioning, messaging, and market communication.
-      </p>
-
-      <a href="#intro" class="visual-entry-scroll">
-        Enter site
-        <span></span>
-      </a>
-    </div>
-  </section>
-  
-  <header class="header">
-    <div class="container header-inner">
-      <a class="brand" href="./index.html" aria-label="Yurimatsu Home">
-        <img class="brand-logo" src="./images/yurimatsulogolarge.png" alt="Yurimatsu logo">
-        <div>
-          <div class="brand-name">Yurimatsu</div>
-          <div class="brand-tagline" data-i18n="brandTagline">
-            B2B innovation marketing
-          </div>
-        </div>
-      </a>
-      <div class="language-switcher" aria-label="Language switcher">
-        <button type="button" class="lang-btn active" data-lang="en">EN</button>
-        <button type="button" class="lang-btn" data-lang="ja">日本語</button>
-      </div>
-
-      <details class="nav">
-        <summary class="nav-toggle" aria-label="Open navigation">Menu</summary>
-        <nav class="nav-menu" aria-label="Primary navigation">
-          <a class="nav-link" href="#intro" data-i18n="navIntro">Intro</a>
-          <a class="nav-link" href="#services" data-i18n="navServices">Services</a>
-          <a class="nav-link" href="#proof" data-i18n="navProof">Proof</a>
-          <a class="nav-link" href="#contact" data-i18n="navContact">Contact</a>
-          <a class="nav-link" href="./services.html" data-i18n="navMore">Service page</a>
-        </nav>
-      </details>
-    </div>
-  </header>
-<body>
-  <section class="visual-entry" id="top">
   <div class="visual-entry-bg" aria-hidden="true"></div>
 
   <div class="visual-entry-inner">
@@ -162,6 +108,7 @@
 </header>
 
 <main>
+    <div class="gecko-walk" aria-hidden="true"></div>
   <section class="hero" id="intro">
     <div class="container hero-grid">
       <div>
@@ -304,7 +251,111 @@
 
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
+  
+const geckoWalk = document.querySelector(".gecko-walk");
+const pageMain = document.querySelector("main");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+if (geckoWalk && pageMain && !reduceMotion.matches) {
+  const FRAME_COUNT = 6;
+  const WINDOW_SPACING = 460;
+  const FRAME_HEIGHT = 94;
+
+  let windows = [];
+  let frame = 0;
+  let lastScrollY = window.scrollY;
+  let accumulatedScroll = 0;
+  let fadeTimer = 0;
+  let ticking = false;
+
+  function buildGeckoWindows() {
+    const requiredWindows = Math.ceil(pageMain.scrollHeight / WINDOW_SPACING);
+
+    if (requiredWindows === windows.length) return;
+
+    geckoWalk.replaceChildren();
+
+    windows = Array.from({ length: requiredWindows }, (_, index) => {
+      const windowElement = document.createElement("span");
+      const trailImage = document.createElement("img");
+
+      windowElement.className = "gecko-walk-window";
+      windowElement.style.setProperty(
+        "--window-top",
+        `${180 + index * WINDOW_SPACING}px`
+      );
+
+      windowElement.style.setProperty(
+        "--window-side",
+        `${5 + (index % 3) * 4}%`
+      );
+
+      windowElement.classList.toggle("gecko-walk-window--left", index % 2 !== 0);
+
+      trailImage.src = "./images/gecko/gecko-trail-loop.png";
+      trailImage.alt = "";
+      trailImage.decoding = "async";
+
+      windowElement.appendChild(trailImage);
+      geckoWalk.appendChild(windowElement);
+
+      return windowElement;
+    });
+
+    updateFrames();
+  }
+
+  function updateFrames() {
+    windows.forEach((windowElement, index) => {
+      const localFrame = (frame + index * 2) % FRAME_COUNT;
+      const image = windowElement.querySelector("img");
+
+      image.style.setProperty(
+        "--trail-offset",
+        `${localFrame * -FRAME_HEIGHT}px`
+      );
+    });
+  }
+
+  function animateGecko() {
+    ticking = false;
+
+    const currentScrollY = window.scrollY;
+    const scrollDelta = currentScrollY - lastScrollY;
+
+    lastScrollY = currentScrollY;
+    accumulatedScroll += scrollDelta;
+
+    if (Math.abs(accumulatedScroll) < 34) return;
+
+    const direction = accumulatedScroll > 0 ? 1 : -1;
+
+    frame = (frame + direction + FRAME_COUNT) % FRAME_COUNT;
+    accumulatedScroll = 0;
+
+    geckoWalk.dataset.direction = direction > 0 ? "down" : "up";
+    geckoWalk.classList.add("is-walking");
+
+    updateFrames();
+
+    window.clearTimeout(fadeTimer);
+    fadeTimer = window.setTimeout(() => {
+      geckoWalk.classList.remove("is-walking");
+    }, 190);
+  }
+
+  function handleScroll() {
+    if (ticking) return;
+
+    ticking = true;
+    requestAnimationFrame(animateGecko);
+  }
+
+  buildGeckoWindows();
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+  window.addEventListener("resize", buildGeckoWindows);
+}
   const translations = {
     en: {
       brandTagline: "B2B innovation marketing",
